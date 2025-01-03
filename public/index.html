@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<div class="bg-shape shape1"></div>
+<div class="bg-shape shape2"></div>
+<div class="bg-shape shape3"></div>
+    <div id="loadingOverlay">
+        <div class="lds-roller">
+            <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        </div>
+        <p>Thinking...</p>
+    </div>
+
+    <div class="header-container">
+        <h1 class="main-title">The Budget Balancer</h1>
+        <h2 class="subtitle">by Noble People</h2>
+        <p class="description">Tell us your brand challenge, and we’ll help you find the perfect solution.</p>
+    </div>
+    
+
+    <div class="container">
+
+        <div class="section">
+            <h3>Brand</h3>
+            <input type="text" id="brandName" placeholder="Enter the brand name">
+        </div>
+
+<!-- Sector -->
+<div class="section">
+    <h3>Category</h3>
+    <p style="margin-bottom: 20px; color: rgba(255, 255, 255, 0.8);">Different types of products rely on either building strong memories or guiding consumers directly to purchase.</p>
+    <div class="button-group" id="sector">
+        <button onclick="selectOption('sector', this, 'Retail')" data-brand="60" data-performance="40">Retail</button>
+        <button onclick="selectOption('sector', this, 'Financial Services')" data-brand="51" data-performance="49">Financial Services</button>
+        <button onclick="selectOption('sector', this, 'CPG Food & Drink')" data-brand="55" data-performance="45">CPG Food & Drink</button>
+        <button onclick="selectOption('sector', this, 'CPG Non-Food')" data-brand="65" data-performance="35">CPG Non-Food</button>
+        <button onclick="selectOption('sector', this, 'Durables')" data-brand="56" data-performance="44">Durables</button>
+        <button onclick="selectOption('sector', this, 'Travel')" data-brand="49" data-performance="51">Travel</button>
+        <button onclick="selectOption('sector', this, 'QSR')" data-brand="49" data-performance="51">QSR</button>
+        <button onclick="selectOption('sector', this, 'Perishables')" data-brand="49" data-performance="51">Perishables</button>
+        <button onclick="selectOption('sector', this, 'Telecoms / ISP')" data-brand="59" data-performance="41">Telecoms / ISP</button>
+    </div>
+</div>
+
+<!-- Purchase Method -->
+<div class="section">
+    <h3>Purchase Method</h3>
+    <p style="margin-bottom: 20px; color: rgba(255, 255, 255, 0.8);">The way people shop—online or offline—influences whether convenience, comparison, or experience drives their choices.</p>
+    <div class="button-group" id="purchaseMethod">
+        <button onclick="toggleOption('purchaseMethod', this, 'Offline')" data-offset="-7">Offline</button>
+        <button onclick="toggleOption('purchaseMethod', this, 'Online')" data-offset="12">Online</button>
+        <button onclick="toggleOption('purchaseMethod', this, 'Serial')" data-offset="5">Serial</button>
+        <button onclick="toggleOption('purchaseMethod', this, 'Subscription')" data-offset="12">Subscription</button>
+    </div>
+</div>
+
+<!-- Pricing Strategy -->
+<div class="section">
+    <h3>Pricing Strategy</h3>
+    <p style="margin-bottom: 20px; color: rgba(255, 255, 255, 0.8);">What people are willing to pay shapes whether success relies on desire, value, or frequent purchases.</p>
+    <div class="button-group" id="pricingStrategy">
+        <button onclick="selectOption('pricingStrategy', this, 'Value / Mainstream')" data-offset="-5">Value / Mainstream</button>
+        <button onclick="selectOption('pricingStrategy', this, 'Premium')" data-offset="5">Premium</button>
+    </div>
+</div>
+
+<!-- Innovation Level -->
+<div class="section">
+    <h3>Innovation Level</h3>
+    <p style="margin-bottom: 20px; color: rgba(255, 255, 255, 0.8);">Introducing something new determines whether a brand grows by solving unmet needs or staying relevant in changing markets.</p>
+    <div class="button-group" id="innovationLevel">
+        <button onclick="selectOption('innovationLevel', this, 'No Innovation')" data-offset="1">No Innovation</button>
+        <button onclick="selectOption('innovationLevel', this, 'New Variant')" data-offset="10">New Variant</button>
+        <button onclick="selectOption('innovationLevel', this, 'New Sub-Brand')" data-offset="16">New Sub-Brand</button>
+        <button onclick="selectOption('innovationLevel', this, 'Entry into New Category')" data-offset="22">Entry into New Category</button>
+    </div>
+</div>
+
+<!-- Brand Stage -->
+<div class="section">
+    <h3>Brand Stage</h3>
+    <p style="margin-bottom: 20px; color: rgba(255, 255, 255, 0.8);">A brand’s maturity determines whether the focus is on growing penetration or sustaining dominance.</p>
+    <div class="button-group" id="brandStage">
+        <button onclick="selectOption('brandStage', this, 'New Category')" data-offset="3">New Category</button>
+        <button onclick="selectOption('brandStage', this, 'Established Category')" data-offset="-4">Established Category</button>
+        <button onclick="selectOption('brandStage', this, 'Declining Category')" data-offset="6">Declining Category</button>
+        <button onclick="selectOption('brandStage', this, 'Stagnant or Low Growth')" data-offset="-2">Stagnant or Low Growth</button>
+        <button onclick="selectOption('brandStage', this, 'Medium or High Growth')" data-offset="11">Medium or High Growth</button>
+    </div>
+</div>
+
+<div class="section">
+    <h3>Brand Size</h3>
+    <p style="margin-bottom: 20px; color: rgba(255, 255, 255, 0.8);">The size of a brand affects how efficiently it can turn advertising into growth.</p>
+    <div class="button-group" id="brandSize">
+        <button onclick="selectOption('brandSize', this, 'Launched in First 1-2 Years')" data-offset="-27">Launched in First 1-2 Years</button>
+        <button onclick="selectOption('brandSize', this, 'Launches After First Year')" data-offset="-5">Launches After First Year</button>
+        <button onclick="selectOption('brandSize', this, 'Small Brand')" data-offset="13">Small Brand</button>
+        <button onclick="selectOption('brandSize', this, 'Medium Brand')" data-offset="6">Medium Brand</button>
+        <button onclick="selectOption('brandSize', this, 'Large Brand')" data-offset="14">Large Brand</button>
+        <button onclick="selectOption('brandSize', this, 'Leading Brand')" data-offset="10">Leading Brand</button>
+    </div>
+</div>
+
+        <div class="section">
+            <h3>Additional Context (Optional)</h3>
+            <textarea id="additionalContext" rows="4" placeholder="Enter any additional context or specific considerations..."></textarea>
+        </div>
+
+        <div class="wrap">
+            <a href="javascript:void(0);" class="button" onclick="calculateRecommendation()">
+                <span class="gradient"></span>
+                Generate Recommendation
+            </a>
+          </div>
+        
+
+        <div id="resultCard">
+            <div id="recommendationContent"></div>
+        </div>
+    </div>
+
+<script src="scripts.js"></script>
+</body>
+</html>
