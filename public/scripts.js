@@ -48,30 +48,30 @@ async function calculateRecommendation() {
     };
 
     // Log inputs being sent to calculator assistant
-    console.log("📥 Inputs sent to Calculator Assistant:", {
+     console.log("📥 Inputs sent to Calculator Assistant:", {
         timestamp: new Date().toISOString(),
         data: JSON.stringify(data, null, 2)
     });
 
     try {
-         loadingText.textContent = "Analyzing your inputs and running calculations to determine the best strategy...";
-         const response = await axios.post('/api/generate', data, { timeout: 45000 });
-         console.log("Server API Response:", response.data);
-          loadingText.textContent = "Crunching the numbers... calculations are complete!";
-          displayRecommendation(response.data);
+        loadingText.textContent = "Analyzing your inputs and running calculations to determine the best strategy...";
+        const response = await axios.post('/api/generate', data, { timeout: 45000 });
+        console.log("Server API Response:", response.data);
+         loadingText.textContent = "Crunching the numbers... calculations are complete!";
+        displayRecommendation(response.data);
     } catch (error) {
         console.error("Error during API calls:", error);
-        if (error.response) {
-             console.error("❌ API Error Response:", error.response.data);
-           showCustomError(`Error: ${error.response.data.message || "Unknown error."}`);
+         if (error.response) {
+           console.error("❌ API Error Response:", error.response.data);
+            showCustomError(`Error: ${error.response.data.message || "Unknown error."}`);
         } else {
-            showCustomError("Unexpected error occurred. Please try again.");
+            console.error("Unexpected error occurred:", error.message);
+            showCustomError(`Unexpected error occurred. Please try again. Error: ${error.message}`);
         }
     } finally {
         document.getElementById('loadingOverlay').style.display = 'none';
     }
 }
-
 
 function displayRecommendation(responseData) {
      console.log("API Response Data:", responseData);
@@ -94,7 +94,7 @@ function displayRecommendation(responseData) {
                 console.log("Content is not JSON, using raw text");
             }
         } catch (e) {
-            console.error("Error processing message content:", e);
+             console.error("Error processing message content:", e);
             content = {
                 recommendation: "Error processing recommendation",
                 rationale: "Unable to process the assistant's response."
@@ -106,7 +106,7 @@ function displayRecommendation(responseData) {
             rationale: "The assistant did not provide a response."
         };
     }
-    
+
     const recommendationContent = document.getElementById('recommendationContent');
     
     const htmlContent = `
@@ -115,7 +115,6 @@ function displayRecommendation(responseData) {
         
         <h2>Rationale</h2>
         <p>${content.rationale || "No rationale provided."}</p>
-        
          <h2>Data Methodology</h2>
          <p>${content.dataMethodology || content.data_methodology || "No data methodology provided."}</p>
         
@@ -134,7 +133,7 @@ function displayRecommendation(responseData) {
 
     recommendationContent.innerHTML = htmlContent;
     document.getElementById('resultCard').style.display = 'block';
-       setTimeout(() => {
+      setTimeout(() => {
         document.getElementById('resultCard').scrollIntoView({
             behavior: 'smooth',
             block: 'start'
