@@ -54,12 +54,11 @@ async function calculateRecommendation() {
     });
 
     try {
-        loadingText.textContent = "Analyzing your inputs and running calculations to determine the best strategy...";
-        const response = await axios.post('/api/generate', data, { timeout: 45000 });
-        console.log("Server API Response:", response.data);
-        loadingText.textContent = "Crunching the numbers... calculations are complete!";
-        displayRecommendation(response.data);
-
+         loadingText.textContent = "Analyzing your inputs and running calculations to determine the best strategy...";
+         const response = await axios.post('/api/generate', data, { timeout: 45000 });
+         console.log("Server API Response:", response.data);
+          loadingText.textContent = "Crunching the numbers... calculations are complete!";
+          displayRecommendation(response.data);
     } catch (error) {
         console.error("Error during API calls:", error);
         if (error.response) {
@@ -73,9 +72,10 @@ async function calculateRecommendation() {
     }
 }
 
+
 function displayRecommendation(responseData) {
-    console.log("API Response Data:", responseData);
-    
+     console.log("API Response Data:", responseData);
+
     // Extract the last assistant message
     const assistantMessages = responseData.messages
         .filter(msg => msg.role === "assistant")
@@ -116,10 +116,10 @@ function displayRecommendation(responseData) {
         <h2>Rationale</h2>
         <p>${content.rationale || "No rationale provided."}</p>
         
-        <h2>Data Methodology</h2>
+         <h2>Data Methodology</h2>
          <p>${content.dataMethodology || content.data_methodology || "No data methodology provided."}</p>
         
-        <h2>The Argument</h2>
+         <h2>The Argument</h2>
         <p>${content.argument || "No argument provided."}</p>
         
         <h2>Pros</h2>
@@ -134,13 +134,14 @@ function displayRecommendation(responseData) {
 
     recommendationContent.innerHTML = htmlContent;
     document.getElementById('resultCard').style.display = 'block';
-        setTimeout(() => {
+       setTimeout(() => {
         document.getElementById('resultCard').scrollIntoView({
             behavior: 'smooth',
             block: 'start'
         });
     }, 100);
 }
+
 
 function showCustomError(message) {
     const errorContainer = document.createElement('div');
